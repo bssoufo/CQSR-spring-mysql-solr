@@ -1,0 +1,16 @@
+https://lucene.apache.org/solr/guide/7_4/configsets-api.html#configsets-api
+Create config using bash
+curl -X POST --header "Content-Type:application/octet-stream" --data-binary @articleConfigSet.zip "http://localhost:8983/solr/admin/configs?action=UPLOAD&name=articleConfigSet"
+
+Delete config using bash
+ curl "http://localhost:8983/solr/admin/configs?action=DELETE&name=articleConfigSet&omitHeader=true"
+
+ Create collection https://lucene.apache.org/solr/guide/8_2/collection-management.html#collection-management
+ curl "http://localhost:8983/solr/admin/collections?action=CREATE&name=article&numShards=1&replicationFactor=2&wt=json&collection.configName=articleConfigSet"
+
+curl -X POST -H 'Content-Type: application/json' 'http://localhost:8983/solr/article/update?commit=true' --data-binary '
+[{
+  "id": "1",
+  "title": "Doc 1",
+  "body":"My best document"
+}]'
